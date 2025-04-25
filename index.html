@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Split Flap Animation - Different Top/Bottom</title>
+    <link rel="stylesheet" href="./src/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+      <h1 class="title">Split Flap Display</h1>
+      
+      <div class="split-flap-container">
+          <!-- Single row of flaps with different top/bottom text -->
+          <div class="split-flap-row" id="displayRow"></div>
+      </div>
+      
+      <div class="phrases">
+          <button class="phrase-btn active" data-text-top="FLUID ANIMATION" data-text-bottom="IMMERSIVE DESIGN">PRESET 1</button>
+          <button class="phrase-btn" data-text-top="MINIMAL DESIGN" data-text-bottom="MAXIMUM IMPACT">PRESET 2</button>
+      </div>
+      
+      <input type="text" class="custom-input" id="textInputTop" placeholder="TOP HALF TEXT" maxlength="18" value="FLUID ANIMATION">
+      <input type="text" class="custom-input" id="textInputBottom" placeholder="BOTTOM HALF TEXT" maxlength="18" value="IMMERSIVE DESIGN">
+      
+      <div class="controls">
+          <button class="control-btn" id="animateBtn">Animate</button>
+      </div>
+  </div>
+  <script src="./src/split-flap.js"></script>
+</body>
+</html>
