@@ -304,9 +304,9 @@ const initialize = () => {
     // Add hover effects
     addFlapHoverEffects();
     
-    // Start animation immediately as letters appear
+    // Start animation immediately as letters appear with center-out pattern
     setTimeout(() => {
-        animateText(true);
+        animateText(true); // This uses center-out animation from your preferred code
     }, 800); // Match CSS fade-in duration exactly
 };
 
