@@ -73,28 +73,28 @@ body {
   border-radius: 2px;
   overflow: hidden;
   opacity: 0;
-  animation: fadeIn 0.6s ease-out forwards;
+  animation: appearSharp 0.1s step-end forwards;
 }
 
-/* Staggered animation delays for each flap */
-.flap:nth-child(1) { animation-delay: 0.1s; }
-.flap:nth-child(2) { animation-delay: 0.2s; }
-.flap:nth-child(3) { animation-delay: 0.3s; }
-.flap:nth-child(4) { animation-delay: 0.4s; }
-.flap:nth-child(5) { animation-delay: 0.5s; }
-.flap:nth-child(6) { animation-delay: 0.6s; }
-.flap:nth-child(7) { animation-delay: 0.7s; }
-.flap:nth-child(8) { animation-delay: 0.8s; }
-.flap:nth-child(9) { animation-delay: 0.9s; }
-.flap:nth-child(10) { animation-delay: 1.0s; }
-.flap:nth-child(11) { animation-delay: 1.1s; }
-.flap:nth-child(12) { animation-delay: 1.2s; }
-.flap:nth-child(13) { animation-delay: 1.3s; }
-.flap:nth-child(14) { animation-delay: 1.4s; }
-.flap:nth-child(15) { animation-delay: 1.5s; }
-.flap:nth-child(16) { animation-delay: 1.6s; }
-.flap:nth-child(17) { animation-delay: 1.7s; }
-.flap:nth-child(18) { animation-delay: 1.8s; }
+/* Center-out animation delays for each flap position */
+.flap:nth-child(9) { animation-delay: 0.1s; } /* center */
+.flap:nth-child(10) { animation-delay: 0.1s; } /* center */
+.flap:nth-child(8) { animation-delay: 0.15s; }
+.flap:nth-child(11) { animation-delay: 0.15s; }
+.flap:nth-child(7) { animation-delay: 0.2s; }
+.flap:nth-child(12) { animation-delay: 0.2s; }
+.flap:nth-child(6) { animation-delay: 0.25s; }
+.flap:nth-child(13) { animation-delay: 0.25s; }
+.flap:nth-child(5) { animation-delay: 0.3s; }
+.flap:nth-child(14) { animation-delay: 0.3s; }
+.flap:nth-child(4) { animation-delay: 0.35s; }
+.flap:nth-child(15) { animation-delay: 0.35s; }
+.flap:nth-child(3) { animation-delay: 0.4s; }
+.flap:nth-child(16) { animation-delay: 0.4s; }
+.flap:nth-child(2) { animation-delay: 0.45s; }
+.flap:nth-child(17) { animation-delay: 0.45s; }
+.flap:nth-child(1) { animation-delay: 0.5s; }
+.flap:nth-child(18) { animation-delay: 0.5s; }
 
 .flap-top, .flap-bottom, .flap-flip {
   position: absolute;
@@ -217,14 +217,12 @@ body {
 }
 
 /* Animations */
-@keyframes fadeIn {
+@keyframes appearSharp {
   from {
     opacity: 0;
-    transform: translateY(20px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
@@ -256,7 +254,7 @@ body {
     --flip-timing: linear;
   }
 
-  @keyframes fadeIn {
+  @keyframes appearSharp {
     from {
       opacity: 0;
     }
