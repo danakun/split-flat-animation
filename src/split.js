@@ -41,8 +41,6 @@ const createFlap = (topChar = ' ', bottomChar = ' ') => {
     return flap;
 };
 
-// This function is now replaced by initializeDualRow
-
 // Get random character from charset
 const getRandomChar = () => 
     CHARSET[Math.floor(Math.random() * CHARSET.length)];
@@ -65,14 +63,6 @@ const animateDualFlap = (flap, topTargetChar, bottomTargetChar, delay, onComplet
     
     // Random number of shuffles - more shuffles for more realism
     const shuffles = 4 + Math.floor(Math.random() * 6);
-    
-    // Create a physical sound effect
-    const playFlapSound = () => {
-        // This would normally use real audio, but we'll simulate it with timing
-        setTimeout(() => {
-            // You would trigger a short click/flap sound here
-        }, ANIMATION_DURATION * 0.6); // Play sound just after the halfway point
-    };
     
     // Animate through random characters
     const animateShuffles = (index) => {
@@ -129,11 +119,6 @@ const animateDualFlap = (flap, topTargetChar, bottomTargetChar, delay, onComplet
             
             // Update bottom flap immediately to show the next bottom character
             flapBottom.textContent = nextBottomChar;
-            
-            // Simulate physical sound
-            if (index % 2 === 0) {
-                playFlapSound();
-            }
             
             // Update top flap after animation to show the next top character
             setTimeout(() => {
@@ -249,9 +234,17 @@ const updateTextBottom = (text) => {
 
 // Add hover effects to flaps
 const addFlapHoverEffects = () => {
-    document.querySelectorAll('.flap').forEach(flap => {
+    document.querySelectorAll('.flap').forEach((flap, index) => {
+        let restoreTimeout = null;
+        
         flap.addEventListener('mouseenter', () => {
             if (state.isAnimating) return;
+            
+            // Clear any existing timeout
+            if (restoreTimeout) {
+                clearTimeout(restoreTimeout);
+                restoreTimeout = null;
+            }
             
             const flapTop = flap.querySelector('.flap-top');
             const flapBottom = flap.querySelector('.flap-bottom');
@@ -260,55 +253,42 @@ const addFlapHoverEffects = () => {
             // Get current character
             const currentTopChar = flapTop.textContent;
             
-            // Generate random characters for top and bottom
+            // Generate random characters
             const randomTopChar = getRandomChar();
             const randomBottomChar = getRandomChar();
             
-            // Quick flip animation
+            // Animate to random characters
             flapFlip.textContent = currentTopChar;
             flapFlip.style.animation = 'none';
             void flapFlip.offsetWidth;
-            flapFlip.style.animation = `flip ${ANIMATION_DURATION * 1.5}ms ${FLIP_TIMING} forwards`;
+            flapFlip.style.animation = `flip ${ANIMATION_DURATION}ms ${FLIP_TIMING} forwards`;
             
-            // Update bottom flap immediately
             flapBottom.textContent = randomBottomChar;
             
-            // Update top flap after animation
             setTimeout(() => {
                 flapTop.textContent = randomTopChar;
+                
+                // Set timeout to restore - just trigger a full re-animation
+                restoreTimeout = setTimeout(() => {
+                    // Simply re-run the animation for this single flap
+                    animateText(true);
+                    restoreTimeout = null;
+                }, 800);
+                
             }, ANIMATION_DURATION * 0.75);
         });
     });
 };
 
-// Initialize a row with dual-character flaps
-const initializeDualRow = (row, count) => {
+// Initialize a row with random characters first
+const initializeDualRowWithRandom = (row, count) => {
     row.innerHTML = '';
     
-    const topText = state.textTop;
-    const bottomText = state.textBottom;
-    
-    // Calculate padding to center text
-    const paddingTop = Math.floor((count - topText.length) / 2);
-    const paddingBottom = Math.floor((count - bottomText.length) / 2);
-    
+    // Create flaps with random characters initially
     for (let i = 0; i < count; i++) {
-        // Get characters for this position
-        let topChar = ' ';
-        let bottomChar = ' ';
-        
-        const topTextIndex = i - paddingTop;
-        if (topTextIndex >= 0 && topTextIndex < topText.length) {
-            topChar = topText[topTextIndex];
-        }
-        
-        const bottomTextIndex = i - paddingBottom;
-        if (bottomTextIndex >= 0 && bottomTextIndex < bottomText.length) {
-            bottomChar = bottomText[bottomTextIndex];
-        }
-        
-        // Create flap with the appropriate characters
-        row.appendChild(createFlap(topChar, bottomChar));
+        const randomTopChar = getRandomChar();
+        const randomBottomChar = getRandomChar();
+        row.appendChild(createFlap(randomTopChar, randomBottomChar));
     }
 };
 
@@ -318,14 +298,16 @@ const initialize = () => {
     updateTextTop("FLUID ANIMATION");
     updateTextBottom("IMMERSIVE DESIGN");
     
-    // Set up display row with dual-character flaps
-    initializeDualRow(elements.displayRow, 18);
+    // Set up display row with random characters initially
+    initializeDualRowWithRandom(elements.displayRow, 18);
     
     // Add hover effects
     addFlapHoverEffects();
     
-    // Trigger initial animation
-    setTimeout(() => animateText(true), 500);
+    // Start animation immediately as letters appear
+    setTimeout(() => {
+        animateText(true);
+    }, 800); // Match CSS fade-in duration exactly
 };
 
 // Event Listeners
