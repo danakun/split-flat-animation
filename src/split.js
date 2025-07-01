@@ -307,7 +307,7 @@ const initialize = () => {
     // Start animation immediately as letters appear with center-out pattern
     setTimeout(() => {
         animateText(true); // This uses center-out animation from your preferred code
-    }, 800); // Match CSS fade-in duration exactly
+    }, 500); // Match ideally with CSS fade-in duration 
 };
 
 // Event Listeners
